@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -47,7 +47,7 @@
                 <!-- ============================================================== -->
                 <!-- Logo -->
                 <!-- ============================================================== -->
-                <a class="navbar-brand" href="dashboard.html">
+                <a class="navbar-brand" href="{{route('dashboard')}}">
 
                 </a>
                 <!-- ============================================================== -->
@@ -100,35 +100,35 @@
                 <ul id="sidebarnav">
                     <!-- User Profile-->
                     <li class="sidebar-item pt-2">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html"
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('dashboard')}}"
                            aria-expanded="false">
                             <i class="far fa-clock" aria-hidden="true"></i>
                             <span class="hide-menu">Ana Sayfa</span>
                         </a>
                     </li>
                     <li class="sidebar-item pt-2">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html"
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('dashboard')}}"
                            aria-expanded="false">
                             <i class="far fa-product" aria-hidden="true"></i>
                             <span class="hide-menu">Link 1</span>
                         </a>
                     </li>
                     <li class="sidebar-item pt-2">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html"
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('dashboard')}}"
                            aria-expanded="false">
                             <i class="far fa-product" aria-hidden="true"></i>
                             <span class="hide-menu">Link 2</span>
                         </a>
                     </li>
                     <li class="sidebar-item pt-2">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html"
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('dashboard')}}"
                            aria-expanded="false">
                             <i class="far fa-product" aria-hidden="true"></i>
                             <span class="hide-menu">Link 3</span>
                         </a>
                     </li>
                     <li class="sidebar-item pt-2">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="dashboard.html"
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('dashboard')}}"
                            aria-expanded="false">
                             <i class="far fa-product" aria-hidden="true"></i>
                             <span class="hide-menu">Link 4</span>
