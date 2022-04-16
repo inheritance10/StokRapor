@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
     <!-- Custom CSS -->
     <link href="/css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/fontawesome-free/css/all.min.css">
     @yield('css')
 </head>
 
@@ -102,36 +103,29 @@
                     <li class="sidebar-item pt-2">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('dashboard')}}"
                            aria-expanded="false">
-                            <i class="far fa-clock" aria-hidden="true"></i>
+                            <i class="fa fa-home" aria-hidden="true"></i>
                             <span class="hide-menu">Ana Sayfa</span>
                         </a>
                     </li>
                     <li class="sidebar-item pt-2">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('dashboard')}}"
                            aria-expanded="false">
-                            <i class="far fa-product" aria-hidden="true"></i>
-                            <span class="hide-menu">Link 1</span>
+                            <i class="fa fa-angle-up" aria-hidden="true"></i>
+                            <span class="hide-menu">Satışlar</span>
                         </a>
                     </li>
                     <li class="sidebar-item pt-2">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('dashboard')}}"
                            aria-expanded="false">
-                            <i class="far fa-product" aria-hidden="true"></i>
-                            <span class="hide-menu">Link 2</span>
+                            <i class="fa fa-basket-shopping" aria-hidden="true"></i>
+                            <span class="hide-menu">Ürünler</span>
                         </a>
                     </li>
                     <li class="sidebar-item pt-2">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('dashboard')}}"
                            aria-expanded="false">
-                            <i class="far fa-product" aria-hidden="true"></i>
-                            <span class="hide-menu">Link 3</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item pt-2">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('dashboard')}}"
-                           aria-expanded="false">
-                            <i class="far fa-product" aria-hidden="true"></i>
-                            <span class="hide-menu">Link 4</span>
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                            <span class="hide-menu">Alımlar</span>
                         </a>
                     </li>
                 </ul>
@@ -158,22 +152,6 @@
         <!-- ============================================================== -->
         <!-- Container fluid  -->
         <!-- ============================================================== -->
-        <div class="container-fluid">
-            <!-- ============================================================== -->
-            <!-- Three charts -->
-            <!-- ============================================================== -->
-            <div class="row justify-content-center">
-
-
-            </div>
-
-            <div class="row">
-                <!-- .col -->
-
-        </div>
-        <!-- ============================================================== -->
-        <!-- End Container fluid  -->
-        <!-- ============================================================== -->
         <!-- ============================================================== -->
         <!-- footer -->
         <!-- ============================================================== -->
@@ -181,7 +159,6 @@
         <!-- ============================================================== -->
         <!-- End footer -->
         <!-- ============================================================== -->
-    </div>
     <!-- ============================================================== -->
     <!-- End Page wrapper  -->
     <!-- ============================================================== -->
