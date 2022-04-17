@@ -11,4 +11,6 @@ class alinanlar extends Model
 
     protected $table = "alinanlar";
 
+    protected $guarded = [];
+
 }

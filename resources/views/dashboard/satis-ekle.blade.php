@@ -19,7 +19,7 @@
             <div class="col-lg-6 col-xlg-6 col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <form class="form-horizontal form-material">
+                        <form method="post" action="{{route('satis-kaydet')}}" class="form-horizontal form-material">
 {{--                            <div class="form-group mb-4">
                                 <label class="col-md-12 p-0">Ürün İsmi</label>
                                 <div class="col-md-10 border-bottom p-0">
@@ -27,28 +27,24 @@
                                            class="form-control p-0 border-0">
                                 </div>
                             </div>--}}
+                            <label class="col-sm-10">Ürün Adı</label>
                             <div id="malzemeler">
 
                                 <div id="malzeme" class="form-group mb-4">
                                     <div class="row">
-
-                                        <label class="col-sm-10">Ürün Adı</label>
-
                                         <div class="col-sm-8 border-bottom">
                                             <select name="urun[]"
                                                     class="form-select shadow-none p-0 border-0 form-control-line select2">
-                                                <option>London</option>
-                                                <option>India</option>
-                                                <option>Usa</option>
-                                                <option>Canada</option>
-                                                <option>Thailand</option>
+                                                @foreach($urunler as $urun)
+                                                    <option value="{{$urun->id}}">{{$urun->urun_adi}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col-md-2 border-bottom p-0">
-                                            <input type="number" step="any" placeholder="Miktar (gr, adet)"
+                                            <input type="number" step="any" name="urun_adet" placeholder="Miktar (adet)"
                                                    class="form-control p-0 border-0"></div>
                                         <div class="col-md-2 border-bottom p-0">
-                                            <input type="number" step="any" placeholder="Tutar (₺)"
+                                            <input type="number" step="any" name="adet_fiyat" placeholder="Adet Başı Tutar (₺)"
                                                    class="form-control p-0 border-0"></div>
                                     </div>
                                     <div class="col-sm-2 border-bottom">
