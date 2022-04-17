@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UrunlerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +14,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return view('dashboard.dashboard');
+    })->name('dashboard');
 
-Route::get('/', function () {
-    return view('backend.dashboard.dashboard');
-})->middleware(['auth'])->name('dashboard');
+    Route::get('urun-listele', [UrunlerController::class, 'urunListele']);
+    Route::get('urun-ekle', [UrunlerController::class, 'urunEkle']);
+    Route::post('urun-kaydet', [UrunlerController::class, 'urunKaydet']);
 
+    Route::get('satis-listele', [UrunlerController::class, 'satisListele']);
+    Route::get('satis-ekle', [UrunlerController::class, 'satisEkle']);
+    Route::get('satis-kaydet', [UrunlerController::class, 'satisKaydet']);
+
+    Route::get('alim-listele', [UrunlerController::class, 'alimListele']);
+    Route::get('alim-ekle', [UrunlerController::class, 'alimEkle']);
+    Route::get('alim-kaydet', [UrunlerController::class, 'alimKaydet']);
+
+    Route::get('gun-sonu', [UrunlerController::class, 'gunSonu']);
+
+});
 require __DIR__.'/auth.php';
