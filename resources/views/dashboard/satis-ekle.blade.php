@@ -34,7 +34,7 @@
 
                                         <label class="col-sm-10">Ürün Adı</label>
 
-                                        <div class="col-sm-10 border-bottom">
+                                        <div class="col-sm-8 border-bottom">
                                             <select name="urun[]"
                                                     class="form-select shadow-none p-0 border-0 form-control-line select2">
                                                 <option>London</option>
@@ -45,7 +45,10 @@
                                             </select>
                                         </div>
                                         <div class="col-md-2 border-bottom p-0">
-                                            <input type="number" placeholder="Miktar (gr, adet)"
+                                            <input type="number" step="any" placeholder="Miktar (gr, adet)"
+                                                   class="form-control p-0 border-0"></div>
+                                        <div class="col-md-2 border-bottom p-0">
+                                            <input type="number" step="any" placeholder="Tutar (₺)"
                                                    class="form-control p-0 border-0"></div>
                                     </div>
                                     <div class="col-sm-2 border-bottom">

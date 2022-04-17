@@ -11,4 +11,7 @@ class urunler extends Model
 
     protected $table = "urunler";
 
+    protected $guarded = [];
+
+
 }

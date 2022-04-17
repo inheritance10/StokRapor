@@ -10,4 +10,6 @@ class malzemeler extends Model
     use HasFactory;
 
     protected $table = "malzemeler";
+
+    protected $guarded = [];
 }

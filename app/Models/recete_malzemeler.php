@@ -11,4 +11,6 @@ class recete_malzemeler extends Model
 
     protected $table = "recete_malzemeler";
 
+    protected $guarded = [];
+
 }

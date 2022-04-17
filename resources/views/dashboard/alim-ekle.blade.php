@@ -45,7 +45,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-2 border-bottom p-0">
-                                            <input type="number" name="malzeme_miktar[]" placeholder="Miktar (gr, adet)"
+                                            <input type="number" name="malzeme_miktar[]" step="any" placeholder="Miktar (gr, adet)"
                                                    class="form-control p-0 border-0"></div>
                                     </div>
                                     <div class="col-sm-2 border-bottom">

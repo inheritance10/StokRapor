@@ -6,10 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords"
-          content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, Ample lite admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, Ample admin lite dashboard bootstrap 5 dashboard template">
-    <meta name="description"
-          content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
     <title>Restaurant</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
@@ -108,21 +104,21 @@
                         </a>
                     </li>
                     <li class="sidebar-item pt-2">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('dashboard')}}"
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('satis-listele')}}"
                            aria-expanded="false">
                             <i class="fa fa-angle-up" aria-hidden="true"></i>
                             <span class="hide-menu">Satışlar</span>
                         </a>
                     </li>
                     <li class="sidebar-item pt-2">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('dashboard')}}"
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('urun-listele')}}"
                            aria-expanded="false">
                             <i class="fa fa-basket-shopping" aria-hidden="true"></i>
                             <span class="hide-menu">Ürünler</span>
                         </a>
                     </li>
                     <li class="sidebar-item pt-2">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('dashboard')}}"
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('alim-listele')}}"
                            aria-expanded="false">
                             <i class="fa fa-angle-down" aria-hidden="true"></i>
                             <span class="hide-menu">Alımlar</span>
@@ -185,6 +181,7 @@
 <script src="/plugins/bower_components/chartist/dist/chartist.min.js"></script>
 <script src="/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
 <script src="/js/pages/dashboards/dashboard1.js"></script>
+
 @yield('js')
 
 </body>
