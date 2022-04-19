@@ -11,4 +11,6 @@ class harcamalar extends Model
 
     protected $table = "harcamalar";
 
+    protected $guarded = [];
+
 }

@@ -11,4 +11,6 @@ class satislar extends Model
 
     protected $table = "satislar";
 
+    protected $guarded = [];
+
 }

@@ -107,9 +107,17 @@
                         <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('urun-listele')}}"
                            aria-expanded="false">
                             <i class="fa fa-basket-shopping" aria-hidden="true"></i>
-                            <span class="hide-menu">Ürünler</span>
+                            <span class="hide-menu">Reçeteler</span>
                         </a>
                     </li>
+                    <li class="sidebar-item pt-2">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('stok-listele')}}"
+                           aria-expanded="false">
+                            <i class="fa fa-warehouse" aria-hidden="true"></i>
+                            <span class="hide-menu">Stok</span>
+                        </a>
+                    </li>
+
                     <li class="sidebar-item pt-2">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('satis-listele')}}"
                            aria-expanded="false">
@@ -117,6 +125,7 @@
                             <span class="hide-menu">Satışlar</span>
                         </a>
                     </li>
+
                     <li class="sidebar-item pt-2">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('alim-listele')}}"
                            aria-expanded="false">

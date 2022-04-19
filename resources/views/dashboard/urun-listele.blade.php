@@ -7,21 +7,21 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title">Ürünler</h3>
+                    <h3 class="box-title">Reçeteler</h3>
                     <a href="{{route('urun-ekle')}}"
                        class="btn btn-danger text-white" target="_blank">
-                        Ürün Ekle</a>
+                        Reçete Ekle</a>
                     <a href="{{route('malzeme-ekle')}}"
                        class="btn btn-warning text-white" target="_blank">
-                        Malzeme Ekle</a>
+                        Ürün Ekle</a>
                     <div class="table-responsive">
                         <table class="table text-nowrap">
                             <thead>
                             <tr>
                                 <th class="border-top-0">#</th>
-                                <th class="border-top-0">Ürün Adı</th>
-                                <th class="border-top-0">Malzeme Adedi</th>
-                                <th class="border-top-0">Satış Fiyatı</th>
+                                <th class="border-top-0">Reçete Adı</th>
+                                <th class="border-top-0">Ürün Adedi</th>
+                                <th class="border-top-0">Maliyet Tutarı</th>
                                 <th class="border-top-0">Detay</th>
                             </tr>
                             </thead>
@@ -31,10 +31,10 @@
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$urun->urun_adi}}</td>
                                 <td>{{$urun->adet}}</td>
-                                <td>{{$urun->satis_fiyati}}</td>
+                                <td>{{number_format($urun->toplam, 2)}}₺</td>
                                 <td><a id="btn3" data="{{$urun->id}}"
                                        class="btn btn-info text-white detay" target="_blank">
-                                        Malzeme Detay</a></td>
+                                        Ürün Detay</a></td>
                             </tr>
                             @endforeach
                             </tbody>
@@ -61,7 +61,7 @@
             $.get("malzemeleri-getir/" + $(this).attr('data'), function (data) {
                 Swal.fire({
                     icon: 'info',
-                    text: JSON.stringify(data),
+                    html: JSON.stringify(data),
                     confirmButtonText: 'Onayla',
                 })
             });

@@ -19,7 +19,7 @@
                                 <th class="border-top-0">Malzeme Adı</th>
                                 <th class="border-top-0">Alınan Miktar</th>
                                 <th class="border-top-0">Toplam Tutar</th>
-                                <th class="border-top-0">Birim Fiyatı(kg-adet)</th>
+                                <th class="border-top-0">Birim Fiyatı(kg-adet-litre)</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -29,7 +29,7 @@
                                     <td>{{$alim->malzeme_adi}}</td>
                                     <td>{{$alim->alinan_miktar}}</td>
                                     <td>{{$alim->toplam_fiyat}}</td>
-                                    <td>{{$alim->miktar_tipi == 'adet' ? $alim->toplam_fiyat / $alim->alinan_miktar  : ($alim->toplam_fiyat / $alim->alinan_miktar) * 1000 }} ₺</td>
+                                    <td>{{number_format($alim->miktar_tipi == 'adet' ? $alim->toplam_fiyat / $alim->alinan_miktar  : ($alim->toplam_fiyat / $alim->alinan_miktar) * 1000, 2) }} ₺</td>
                                 </tr>
                             @endforeach
                             </tbody>

@@ -3,20 +3,13 @@
     <div class="page-breadcrumb bg-white">
         <div class="row align-items-center">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Satış Ekle</h4>
+                <h4 class="page-title">Kayıp Ekle</h4>
             </div>
         </div>
         <!-- /.col-lg-12 -->
     </div>
 
     <div class="container-fluid">
-        @if(session()->has('status'))
-            <div class="alert alert-warning">
-                <p>
-                    {{session('status')}}
-                </p>
-            </div>
-        @endif
         <!-- ============================================================== -->
         <!-- Start Page Content -->
         <!-- ============================================================== -->
@@ -26,7 +19,7 @@
             <div class="col-lg-6 col-xlg-6 col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <form method="post" action="{{route('satis-kaydet')}}" class="form-horizontal form-material">
+                        <form method="post" action="{{route('kayip-kaydet')}}" class="form-horizontal form-material">
                             @csrf
 {{--                            <div class="form-group mb-4">
                                 <label class="col-md-12 p-0">Ürün İsmi</label>
@@ -35,7 +28,7 @@
                                            class="form-control p-0 border-0">
                                 </div>
                             </div>--}}
-                            <label class="col-sm-10">Reçete Adı</label>
+                            <label class="col-sm-10">Ürün Adı</label>
                             <div id="malzemeler">
 
                                 <div id="malzeme" class="form-group mb-4">
@@ -44,23 +37,22 @@
                                             <select name="urun[]"
                                                     class="form-select shadow-none p-0 border-0 form-control-line select2">
                                                 @foreach($urunler as $urun)
-                                                    <option value="{{$urun->id}}">{{$urun->urun_adi}}</option>
+                                                    <option value="{{$urun->id}}">{{$urun->malzeme_adi}}({{$urun->miktar_tipi}})</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-md-2 border-bottom p-0">
-                                            <input type="number" step="any" name="urun_adet" placeholder="Miktar (adet)"
-                                                   class="form-control p-0 border-0"></div>
-                                    </div>
+                                            <input type="number" step="any" name="urun_miktar[]" placeholder="Miktar"
+                                                   class="form-control p-0 border-0"></div></div>
                                     <div class="col-sm-2 border-bottom">
                                     </div>
                                 </div>
                             </div>
-                            <a class="btn btn-info mb-4" id="btn2">Reçete Ekle</a>
+                            <a class="btn btn-info mb-4" id="btn2">Ürün Ekle</a>
 
                             <div class="form-group mb-4">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-success">Satışı Kaydet</button>
+                                    <button class="btn btn-warning">Kayıbı Kaydet</button>
                                 </div>
                             </div>
                         </form>

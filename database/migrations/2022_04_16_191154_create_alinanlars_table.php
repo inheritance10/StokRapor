@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('malzeme_id');
             $table->double('alinan_miktar');
+            $table->double('stok_miktar');
             $table->double('toplam_fiyat');
             $table->timestamps();
         });

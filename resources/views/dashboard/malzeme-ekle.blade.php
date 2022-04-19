@@ -3,7 +3,7 @@
     <div class="page-breadcrumb bg-white">
         <div class="row align-items-center">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Malzeme Ekle</h4>
+                <h4 class="page-title">Ürün Ekle</h4>
             </div>
         </div>
         <!-- /.col-lg-12 -->
@@ -28,7 +28,7 @@
                                                                        class="form-control p-0 border-0">
                                                             </div>
                                                         </div>--}}
-                            <label class="col-sm-10">Malzeme Adı</label>
+                            <label class="col-sm-10">Ürün Adı</label>
                             <div id="malzemeler">
 
                                 <div id="malzeme" class="form-group mb-4">
@@ -36,7 +36,7 @@
 
 
                                         <div class="col-sm-10 border-bottom">
-                                            <input type="text" name="malzeme[]" placeholder="Malzeme"
+                                            <input type="text" name="malzeme[]" placeholder="Ürün"
                                                    class="form-control p-0 border-0">
                                         </div>
                                         <div class="col-md-2 border-bottom p-0">
@@ -44,6 +44,7 @@
                                                     class="form-select shadow-none p-0 border-0 form-control-line select2">
                                                 <option>adet</option>
                                                 <option>gram</option>
+                                                <option>ml</option>
                                             </select>
 
                                     </div>
@@ -52,11 +53,11 @@
                                 </div>
                             </div>
                             </div>
-                            <a class="btn btn-info mb-4" id="btn2">Malzeme Ekle</a>
+                            <a class="btn btn-info mb-4" id="btn2">Ürün Ekle</a>
 
                             <div class="form-group mb-4">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-success">Malzemeleri Kaydet</button>
+                                    <button class="btn btn-success">Ürünleri Kaydet</button>
                                 </div>
                             </div>
                         </form>

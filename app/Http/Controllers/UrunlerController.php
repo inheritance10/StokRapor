@@ -6,6 +6,7 @@ use App\Models\alinanlar;
 use App\Models\harcamalar;
 use App\Models\malzemeler;
 use App\Models\recete_malzemeler;
+use App\Models\receteler;
 use App\Models\satislar;
 use App\Models\urunler;
 use Carbon\Carbon;
@@ -16,29 +17,20 @@ class UrunlerController extends Controller
 {
     public function anasayfa()
     {
-        $satislarAll = satislar::all();
-        $toplamSatis = 0;
+        $toplamSatis = satislar::count();
         $toplamAlis = alinanlar::sum('toplam_fiyat');
-        $kayipGram = harcamalar::leftJoin('malzemeler', 'malzeme_id', 'malzemeler.id')
-            ->where('miktar_tipi', 'gram')
+        $kayipMiktar = harcamalar::leftJoin('malzemeler', 'malzeme_id', 'malzemeler.id')
             ->where('harcama_turu', 'kayip')
             ->sum('harcama_miktari');
-        $kayipAdet =harcamalar::leftJoin('malzemeler', 'malzeme_id', 'malzemeler.id')
-            ->where('miktar_tipi', 'adet')
-            ->where('harcama_turu', 'kayip')
-            ->sum('harcama_miktari');
-        foreach ($satislarAll as $satis) {
-            $urun = urunler::find($satis->id);
-            $toplamSatis += $urun->satis_fiyati * $satis->satis_miktari;
-        }
 
-        return view('dashboard.dashboard', compact('toplamSatis', 'toplamAlis', 'kayipAdet', 'kayipGram'));
+        return view('dashboard.dashboard', compact('toplamSatis', 'toplamAlis', 'kayipMiktar'));
     }
 
-    public function gunSonu()
+    public function stokListele()
     {
-
-        return view('dashboard.gun-sonu');
+        $malzemeler = DB::select('select malzeme_adi, miktar_tipi, (select sum(stok_miktar) from alinanlar where alinanlar.malzeme_id = m.id ) as miktar from malzemeler m');
+        $malzemeGiderler = DB::select('select malzeme_adi, miktar_tipi, (select sum(toplam_fiyat) from alinanlar where alinanlar.malzeme_id = m.id and month(now()) = month(created_at) and year(now()) = year(created_at)) as fiyat from malzemeler m');
+        return view('dashboard.stok-listele', compact('malzemeler', 'malzemeGiderler'));
     }
 
     public function malzemeEkle()
@@ -51,9 +43,12 @@ class UrunlerController extends Controller
     {
         $malzemeler = recete_malzemeler::leftJoin('malzemeler', 'malzemeler_id', 'malzemeler.id')
             ->where('recete_id', $id)
-            ->get()
-            ->pluck('recete_malzeme_miktar', 'malzeme_adi');
-        return response()->json($malzemeler);
+            ->get();
+        $donus = "";
+        foreach ($malzemeler as $malzeme) {
+            $donus .= " " . $malzeme->malzeme_adi . ": " . $malzeme->recete_malzeme_miktar . " " . $malzeme->miktar_tipi . ", ";
+        }
+        return response()->json($donus);
     }
 
     public function malzemeKaydet(Request $request)
@@ -81,9 +76,20 @@ class UrunlerController extends Controller
     {
         $urunler = urunler::select('urun_adi',
             'id',
-            'satis_fiyati',
             DB::raw('(SELECT COUNT(id) FROM recete_malzemeler WHERE recete_id = urunler.id) as adet'))
             ->get();
+
+        foreach ($urunler as $urun){
+            $urun->toplam = 0;
+            $malzemeler = recete_malzemeler::where('recete_id', $urun->id)
+                ->get();
+            foreach ($malzemeler as $malzeme) {
+                $alinan = alinanlar::where('malzeme_id', $malzeme->malzemeler_id)->orderBy('created_at', 'desc')->first();
+                $birimFiyat = $alinan->toplam_fiyat / $alinan->alinan_miktar;
+                $urun->toplam += $malzeme->recete_malzeme_miktar * $birimFiyat;
+
+            }
+        }
         return view('dashboard.urun-listele', compact('urunler'));
     }
 
@@ -115,12 +121,12 @@ class UrunlerController extends Controller
 
         $satislar = [];
         for ($i = 0; $i < count($satislarAll); $i++) {
-            $id = $satislarAll[$i]->id;
+            $id = $satislarAll[$i]->urun_id;
             $urun = urunler::find($id);
             $satislar[$i]["urun_adi"] = $urun->urun_adi;
             $satislar[$i]["toplam_satis"] = $satislarAll[$i]->satis_miktari;
-            $satislar[$i]["toplam_gelir"] = $urun->satis_fiyati * $satislarAll[$i]->satis_miktari;
-            $satislar[$i]["adet_fiyati"] = $urun->satis_fiyati;
+/*            $satislar[$i]["toplam_gider"] = $urun->satis_fiyati * $satislarAll[$i]->satis_miktari;
+            $satislar[$i]["adet_fiyati"] = $urun->satis_fiyati;*/
         }
 
         return view('dashboard.satis-listele', compact('satislar'));
@@ -137,16 +143,87 @@ class UrunlerController extends Controller
     {
         $urunler = $request->urun;
         $miktarlar = $request->urun_adet;
+
+        for ($i = 0; $i < count($urunler); $i++) {
+            if (empty($urunler[$i]) || empty($miktarlar[$i]))
+                continue;
+
+            $malzemeler = recete_malzemeler::where('recete_id', $urunler[$i])->get();
+            for ($j = 0; $j < count($malzemeler); $j++) {
+                $alinan = alinanlar::where('malzeme_id', $malzemeler[$j]->malzemeler_id)
+                    ->where('stok_miktar', '>', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+                if (count($alinan) <= 0) {
+                    return back()->with('status', 'yeterli ürün yok');
+                }
+                $alinan[0]->stok_miktar = $alinan[0]->stok_miktar - $malzemeler[$j]->recete_malzeme_miktar;
+                if ($alinan[0]->stok_miktar >= 0) {
+                    $alinan[0]->update();
+                } else {
+                    return $alinan[0]->stok_miktar;
+                }
+            }
+
+            satislar::create([
+                'urun_id' => $urunler[$i],
+                'satis_miktari' => $miktarlar[$i]
+            ]);
+            /*            harcamalar::create([
+                            'malzeme_id' => $urunler[$i],
+                            'harcama_turu' => 'satis'
+                        ]);*/
+        }
+
+        return redirect()->route('satis-listele');
+    }
+
+    public function kayipEkle()
+    {
+        $urunler = malzemeler::all();
+
+        return view('dashboard.kayip-ekle', compact('urunler'));
+    }
+
+    public function kayipKaydet(Request $request)
+    {
+        $urunler = $request->urun;
+        $miktarlar = $request->urun_miktar;
+
+        for ($i = 0; $i < count($urunler); $i++) {
+            if (empty($urunler[$i]) || empty($miktarlar[$i]))
+                continue;
+
+            $malzemeler = malzemeler::where('id', $urunler[$i])->first();
+                $alinan = alinanlar::where('malzeme_id', $malzemeler->id)
+                    ->where('stok_miktar', '>', 0)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+                $tutar = 0;
+                if (count($alinan) <= 0) {
+                    return back()->with('status', 'yeterli ürün yok');
+                }
+                $alinan[0]->stok_miktar = $alinan[0]->stok_miktar - $miktarlar[$i];
+                if ($alinan[0]->stok_miktar >= 0) {
+                    $alinan[0]->update();
+                } else {
+                    return back()->with('status', 'stok yetersiz');
+                }
+            harcamalar::create([
+                'malzeme_id' => $urunler[$i],
+                'harcama_turu' => 'kayip',
+                'harcama_miktari' => $tutar
+            ]);
+        }
+
+        $urunler = $request->urun;
+        $miktarlar = $request->urun_adet;
         $fiyatlar = $request->adet_fiyat;
 
         for ($i = 0; $i < count($urunler); $i++) {
             if (empty($urunler[$i]) || empty($miktarlar[$i]))
                 continue;
-            satislar::create([
-                'malzeme_id' => $urunler[$i],
-                'alinan_miktar' => $miktarlar[$i],
-                'toplam_fiyat' => $fiyatlar[$i]
-            ]);
+
         }
 
         return redirect()->route('satis-listele');
@@ -180,6 +257,7 @@ class UrunlerController extends Controller
             alinanlar::create([
                 'malzeme_id' => $malzemeler[$i],
                 'alinan_miktar' => $miktarlar[$i],
+                'stok_miktar' => $miktarlar[$i],
                 'toplam_fiyat' => $fiyatlar[$i]
             ]);
         }

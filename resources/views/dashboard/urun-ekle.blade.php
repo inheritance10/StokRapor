@@ -26,12 +26,12 @@
                                     <input type="text" name="urun_adi" placeholder="Pastırmalı Pizza"
                                            class="form-control p-0 border-0"></div>
                             </div>
+                            <label class="col-sm-10">Malzeme Adı</label>
                             <div id="malzemeler">
 
                                 <div id="malzeme" class="form-group mb-4">
                                     <div class="row">
 
-                                        <label class="col-sm-10">Malzeme Adı</label>
 
                                         <div class="col-sm-10 border-bottom">
                                             <select name="malzeme[]"
@@ -43,7 +43,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-2 border-bottom p-0">
-                                            <input type="number" name="malzeme_miktar[]" step="any" placeholder="Miktar (gr, adet)"
+                                            <input type="number" name="malzeme_miktar[]" step="any" placeholder="Miktar (gr, adet, ml)"
                                                    class="form-control p-0 border-0"></div>
                                     </div>
                                     <div class="col-sm-2 border-bottom">
