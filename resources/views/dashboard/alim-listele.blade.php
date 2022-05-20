@@ -9,7 +9,7 @@
                 <div class="white-box">
                     <h3 class="box-title">Alımlar</h3>
                     <a href="{{route('alim-ekle')}}"
-                       class="btn btn-danger text-white" target="_blank">
+                       class="btn btn-danger text-white" >
                         Alım Ekle</a>
                     <div class="table-responsive">
                         <table class="table text-nowrap">
@@ -27,9 +27,9 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$alim->malzeme_adi}}</td>
-                                    <td>{{$alim->alinan_miktar}}</td>
-                                    <td>{{$alim->toplam_fiyat}}</td>
-                                    <td>{{number_format($alim->miktar_tipi == 'adet' ? $alim->toplam_fiyat / $alim->alinan_miktar  : ($alim->toplam_fiyat / $alim->alinan_miktar) * 1000, 2) }} ₺</td>
+                                    <td>{{$alim->alinan_miktar . " " . $alim->miktar_tipi}}</td>
+                                    <td>{{$alim->toplam_fiyat}}₺</td>
+                                    <td>{{number_format($alim->miktar_tipi == 'adet' ? $alim->toplam_fiyat / $alim->alinan_miktar  : ($alim->toplam_fiyat / $alim->alinan_miktar) * 1000, 2) }}₺</td>
                                 </tr>
                             @endforeach
                             </tbody>

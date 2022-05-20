@@ -5,7 +5,14 @@
         <!-- Start Page Content -->
         <!-- ============================================================== -->
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
+                @if(session()->has('status'))
+                    <div class="alert alert-info">
+                        <h4>
+                            {{session('status')}}
+                        </h4>
+                    </div>
+                @endif
                 <div class="white-box">
                     <h3 class="box-title">Stok</h3>
                     <div class="table-responsive">
@@ -16,6 +23,7 @@
                                 <th class="border-top-0">Ürün Adı</th>
                                 <th class="border-top-0">Kalan Miktar</th>
                                 <th class="border-top-0">Miktar Tipi</th>
+                                <th class="border-top-0">İşlem</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -23,8 +31,17 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$malzeme->malzeme_adi}}</td>
-                                    <td>{{$malzeme->miktar}}</td>
+                                    <td>{{$malzeme->miktar ?? "Alım Yapılmadı"}}</td>
                                     <td>{{$malzeme->miktar_tipi}}</td>
+                                    <td>
+                                        <form action="urun-sil/{{$malzeme->id}}" method="post">
+                                            @csrf
+                                            <button type="submit" title="Ürünü Sil"
+                                                    class="btn btn-danger text-white">
+                                                Ürünü Sil
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -33,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        {{--<div class="row">
             <div class="col-sm-6">
                 <div class="white-box">
                     <h3 class="box-title">Bu Ay Harcanan Tutarlar</h3>
@@ -48,18 +65,20 @@
                             </thead>
                             <tbody>
                             @foreach($malzemeGiderler as $malzemeGider)
+                                @if($malzemeGider->fiyat)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$malzemeGider->malzeme_adi}}</td>
                                     <td>{{$malzemeGider->fiyat }}</td>
                                 </tr>
+                                @endif
                             @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--}}
         <!-- ============================================================== -->
         <!-- End PAge Content -->
         <!-- ============================================================== -->

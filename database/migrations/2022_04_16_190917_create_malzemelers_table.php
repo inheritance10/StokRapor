@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('malzeme_adi');
             $table->string('miktar_tipi');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

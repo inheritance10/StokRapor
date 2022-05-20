@@ -6,13 +6,24 @@
         <!-- ============================================================== -->
         <div class="row">
             <div class="col-sm-12">
+                @if(session()->has('status'))
+                    <div class="alert alert-info">
+                        <h4>
+                            {{session('status')}}
+                        </h4>
+                    </div>
+                @endif
+                    <a href="{{route('son-silineni-getir')}}"
+                       style=" font-weight: bold; font-size: 18px"
+                       class="btn btn-success text-white">
+                        Son Silineni Geri Getir</a>
                 <div class="white-box">
                     <h3 class="box-title">Reçeteler</h3>
                     <a href="{{route('urun-ekle')}}"
-                       class="btn btn-danger text-white" target="_blank">
+                       class="btn btn-danger text-white">
                         Reçete Ekle</a>
                     <a href="{{route('malzeme-ekle')}}"
-                       class="btn btn-warning text-white" target="_blank">
+                       class="btn btn-warning text-white">
                         Ürün Ekle</a>
                     <div class="table-responsive">
                         <table class="table text-nowrap">
@@ -34,7 +45,14 @@
                                 <td>{{number_format($urun->toplam, 2)}}₺</td>
                                 <td><a id="btn3" data="{{$urun->id}}"
                                        class="btn btn-info text-white detay" target="_blank">
-                                        Ürün Detay</a></td>
+                                        Ürün Detay</a>
+                                    <form action="recete-sil/{{$urun->id}}" method="post">
+                                        @csrf
+                                    <button type="submit" title="Reçeteyi Sil"
+                                       class="btn btn-danger text-white">
+                                        Reçeteyi Sil</button>
+                                    </form>
+                                </td>
                             </tr>
                             @endforeach
                             </tbody>

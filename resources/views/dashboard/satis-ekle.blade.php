@@ -10,13 +10,7 @@
     </div>
 
     <div class="container-fluid">
-        @if(session()->has('status'))
-            <div class="alert alert-warning">
-                <p>
-                    {{session('status')}}
-                </p>
-            </div>
-        @endif
+
         <!-- ============================================================== -->
         <!-- Start Page Content -->
         <!-- ============================================================== -->
@@ -26,6 +20,13 @@
             <div class="col-lg-6 col-xlg-6 col-md-12">
                 <div class="card">
                     <div class="card-body">
+                        @if(session()->has('status'))
+                            <div class="alert alert-warning">
+                                <h4>
+                                    {{session('status')}}
+                                </h4>
+                            </div>
+                        @endif
                         <form method="post" action="{{route('satis-kaydet')}}" class="form-horizontal form-material">
                             @csrf
 {{--                            <div class="form-group mb-4">

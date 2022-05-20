@@ -5,9 +5,9 @@
         <!-- Three charts -->
         <!-- ============================================================== -->
         <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-12">
-                <div class="white-box analytics-info">
-                    <h3 class="box-title">Toplam Satış</h3>
+            <div onclick="window.location.href = '/stok-listele';" class="btn col-lg-3 col-md-12">
+                <div style="border-style: groove; border-radius: 10px;" class="white-box analytics-info">
+                    <h3 class="box-title">Stoklar</h3>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
                         <li>
                             <div id="sparklinedash">
@@ -15,13 +15,13 @@
                                         style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
                             </div>
                         </li>
-                        <li class="ms-auto"><span class="counter text-success">{{$toplamSatis}} adet</span></li>
+{{--                        <li class="ms-auto"><span class="counter text-success">{{$toplamSatis}} adet</span></li>--}}
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-12">
-                <div class="white-box analytics-info">
-                    <h3 class="box-title">Toplam Alış</h3>
+            <div onclick="window.location.href = '/recete-listele';" class="btn col-lg-3 col-md-12">
+                <div style="border-style: groove; border-radius: 10px;" class="white-box analytics-info">
+                    <h3 class="box-title">Reçeteler</h3>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
                         <li>
                             <div id="sparklinedash2">
@@ -29,13 +29,13 @@
                                         style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
                             </div>
                         </li>
-                        <li class="ms-auto"><span class="counter text-purple">{{$toplamAlis}} ₺</span></li>
+{{--                        <li class="ms-auto"><span class="counter text-purple">{{$toplamAlis}} ₺</span></li>--}}
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-12">
-                <div class="white-box analytics-info">
-                    <h3 class="box-title">Kayıp Tutarı</h3>
+            <div onclick="window.location.href = '/satis-listele';" class="btn col-lg-3 col-md-12">
+                <div style="border-style: groove; border-radius: 10px;" class="white-box analytics-info">
+                    <h3 class="box-title">Satışlar</h3>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
                         <li>
                             <div id="sparklinedash3">
@@ -43,7 +43,22 @@
                                         style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
                             </div>
                         </li>
-                        <li class="ms-auto"><span class="counter text-info">{{$kayipMiktar}} ₺</span>
+{{--                        <li class="ms-auto"><span class="counter text-info">{{$kayipMiktar}} ₺</span>--}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div onclick="window.location.href = '/alim-listele';" class="btn col-lg-3 col-md-12">
+                <div style="border-style: groove; border-radius: 10px;" class="white-box analytics-info bg-green">
+                    <h3 class="box-title">Alımlar</h3>
+                    <ul class="list-inline two-part d-flex align-items-center mb-0 float-left">
+                        <li>
+                            <div id="sparklinedash4">
+                                <canvas width="67" height="30"
+                                        style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
+                            </div>
+                        </li>
+{{--                        <li class="ms-auto"><span class="counter text-info">{{$kayipMiktar}} ₺</span>--}}
                         </li>
                     </ul>
                 </div>

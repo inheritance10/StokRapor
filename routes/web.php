@@ -17,15 +17,18 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/', [UrunlerController::class, 'anasayfa'])->name('dashboard');
+    Route::get('/dashboard', [UrunlerController::class, 'anasayfa']);
 
-    Route::get('urun-listele', [UrunlerController::class, 'urunListele'])->name('urun-listele');
+    Route::get('recete-listele', [UrunlerController::class, 'urunListele'])->name('urun-listele');
     Route::get('urun-ekle', [UrunlerController::class, 'urunEkle'])->name('urun-ekle');
     Route::post('urun-kaydet', [UrunlerController::class, 'urunKaydet'])->name('urun-kaydet');
+    Route::post('recete-sil/{id}', [UrunlerController::class, 'receteSil'])->name('recete-sil');
 
     Route::get('malzeme-ekle', [UrunlerController::class, 'malzemeEkle'])->name('malzeme-ekle');
     Route::get('malzemeleri-getir/{id}', [UrunlerController::class, 'malzemeleriGetir'])->name('malzemeleri-getir');
     Route::post('malzeme-kaydet', [UrunlerController::class, 'malzemeKaydet'])->name('malzeme-kaydet');
     Route::get('malzeme-detay', [UrunlerController::class, 'malzemeDetay'])->name('malzeme-detay');
+    Route::post('urun-sil/{malzeme}', [UrunlerController::class, 'malzemeSil'])->name('malzeme-sil');
 
     Route::get('satis-listele', [UrunlerController::class, 'satisListele'])->name('satis-listele');
     Route::get('satis-ekle', [UrunlerController::class, 'satisEkle'])->name('satis-ekle');
@@ -38,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('alim-kaydet', [UrunlerController::class, 'alimKaydet'])->name('alim-kaydet');
 
     Route::get('stok-listele', [UrunlerController::class, 'stokListele'])->name('stok-listele');
+    Route::get('son-silineni-getir', [UrunlerController::class, 'sonSilineniGeriAl'])->name('son-silineni-getir');
 
 });
 require __DIR__.'/auth.php';
