@@ -19,6 +19,14 @@
             <div class="col-lg-6 col-xlg-6 col-md-12">
                 <div class="card">
                     <div class="card-body">
+                        @if(session()->has('status'))
+                            <div class="alert alert-warning">
+                                <h4>
+                                    {{session('status')}}
+                                </h4>
+                            </div>
+                        @endif
+
                         <form method="post" action="/alim-kaydet" class="form-horizontal form-material">
                             @csrf
                             <label class="col-sm-10">Malzeme Adı</label>

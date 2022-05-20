@@ -111,7 +111,7 @@ class UrunlerController extends Controller
 
         for ($i = 0; $i < count($malzemeler); $i++) {
             if (empty($malzemeler[$i]) || empty($miktarlar[$i]))
-                continue;
+                return back()->with('status', 'Lütfen Geçerli Değerler Giriniz.');
             recete_malzemeler::create([
                 'recete_id' => $urun->id,
                 'malzemeler_id' => $malzemeler[$i],
@@ -160,7 +160,7 @@ class UrunlerController extends Controller
 
         for ($i = 0; $i < count($urunler); $i++) {
             if (empty($urunler[$i]) || empty($miktarlar[$i]))
-                continue;
+                return back()->with('status', 'Lütfen Geçerli Değerler Giriniz.');
 
             $malzemeler = recete_malzemeler::where('recete_id', $urunler[$i])->get();
             for ($j = 0; $j < count($malzemeler); $j++) {
@@ -212,7 +212,7 @@ class UrunlerController extends Controller
 
         for ($i = 0; $i < count($urunler); $i++) {
             if (empty($urunler[$i]) || empty($miktarlar[$i]))
-                continue;
+                return back()->with('status', 'Lütfen Geçerli Değerler Giriniz.');
 
             $malzemeler = malzemeler::where('id', $urunler[$i])->first();
             $alinan = alinanlar::where('malzeme_id', $malzemeler->id)
@@ -273,7 +273,7 @@ class UrunlerController extends Controller
 
         for ($i = 0; $i < count($malzemeler); $i++) {
             if (empty($malzemeler[$i]) || empty($miktarlar[$i]))
-                continue;
+                return back()->with('status', 'Lütfen Geçerli Değerler Giriniz.');
             alinanlar::create([
                 'malzeme_id' => $malzemeler[$i],
                 'alinan_miktar' => $miktarlar[$i],
