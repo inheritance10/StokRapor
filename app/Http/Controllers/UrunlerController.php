@@ -129,6 +129,7 @@ class UrunlerController extends Controller
     public function satisListele()
     {
         $satislarAll = satislar::whereDate('created_at', '>=', Carbon::now()->startOfMonth())
+            ->orderBy('created_at', 'desc')
             ->get();
 
         $satislar = [];
@@ -253,7 +254,8 @@ class UrunlerController extends Controller
     public function alimListele()
     {
         $alimlar = alinanlar::leftJoin('malzemeler', 'malzeme_id', 'malzemeler.id')
-            ->get();
+            ->orderBy('alinanlar.created_at', 'desc')
+            ->get(["malzeme_adi", "alinan_miktar", "miktar_tipi", "toplam_fiyat", "alinanlar.created_at"]);
 
         return view('dashboard.alim-listele', compact('alimlar'));
     }
