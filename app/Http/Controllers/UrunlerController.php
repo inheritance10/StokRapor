@@ -137,6 +137,7 @@ class UrunlerController extends Controller
             $urun = urunler::withTrashed()->find($id);
             $satislar[$i]["urun_adi"] = $urun->urun_adi;
             $satislar[$i]["toplam_satis"] = $satislarAll[$i]->satis_miktari;
+            $satislar[$i]["created_at"] = $satislarAll[$i]->created_at;
             /*            $satislar[$i]["toplam_gider"] = $urun->satis_fiyati * $satislarAll[$i]->satis_miktari;
                         $satislar[$i]["adet_fiyati"] = $urun->satis_fiyati;*/
         }

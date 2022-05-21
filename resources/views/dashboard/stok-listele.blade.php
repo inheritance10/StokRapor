@@ -34,10 +34,10 @@
                                     <td>{{$malzeme->miktar ?? "Alım Yapılmadı"}}</td>
                                     <td>{{$malzeme->miktar_tipi}}</td>
                                     <td>
-                                        <form action="urun-sil/{{$malzeme->id}}" method="post">
+                                        <form id="urun-sil-form" action="urun-sil/{{$malzeme->id}}" method="post">
                                             @csrf
-                                            <button type="submit" title="Ürünü Sil"
-                                                    class="btn btn-danger text-white">
+                                            <button type="button" onclick="myFunction()" title="Ürünü Sil"
+                                                    class="urun-sil btn btn-danger text-white">
                                                 Ürünü Sil
                                             </button>
                                         </form>
@@ -91,6 +91,15 @@
     <!-- jQuery 3 -->
     <script src="/plugins/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <script>
+        function myFunction() {
+            let text = "Silmek Sitediğinizden emin misiniz.";
+            if (confirm(text) == true) {
+                document.getElementById("urun-sil-form").submit();
+            } else {
 
+            }
+        }
+    </script>
 @endsection
 

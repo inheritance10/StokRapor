@@ -21,6 +21,7 @@
                                 <th class="border-top-0">#</th>
                                 <th class="border-top-0">Ürün Adı</th>
                                 <th class="border-top-0">Toplam Satış Adedi</th>
+                                <th class="border-top-0">Tarih</th>
 {{--                                <th class="border-top-0">Adet Fiyatı</th>
                                 <th class="border-top-0">Toplam Gider</th>--}}
                             </tr>
@@ -31,6 +32,7 @@
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$satis['urun_adi']}}</td>
                                 <td>{{$satis['toplam_satis']}}</td>
+                                <td>{{$satis['created_at']}}</td>
 {{--                                <td>{{$satis['adet_fiyati']}}</td>
                                 <td>{{$satis['toplam_gider']}} ₺</td>--}}
                             </tr>

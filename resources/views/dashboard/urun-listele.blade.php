@@ -46,9 +46,9 @@
                                 <td><a id="btn3" data="{{$urun->id}}"
                                        class="btn btn-info text-white detay" target="_blank">
                                         Ürün Detay</a>
-                                    <form action="recete-sil/{{$urun->id}}" method="post">
+                                    <form id="urun-sil-form" action="recete-sil/{{$urun->id}}" method="post">
                                         @csrf
-                                    <button type="submit" title="Reçeteyi Sil"
+                                    <button type="button" onclick="myFunction()" title="Reçeteyi Sil"
                                        class="btn btn-danger text-white">
                                         Reçeteyi Sil</button>
                                     </form>
@@ -86,6 +86,15 @@
             console.log($(this).attr('data'))
 
             });
+        function myFunction() {
+            let text = "Silmek Sitediğinizden emin misiniz.";
+            if (confirm(text) == true) {
+                document.getElementById("urun-sil-form").submit();
+            } else {
+
+            }
+        }
+
     </script>
 @endsection
 
