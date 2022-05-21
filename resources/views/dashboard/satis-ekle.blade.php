@@ -16,8 +16,12 @@
         <!-- ============================================================== -->
         <!-- Row -->
         <div class="row">
-            <!-- Column -->
+            <div class='geri-don'>
+                <a class="btn btn-warning show-mobile" href="{{url()->previous()}}">Geri</a>
+            </div>            <!-- Column -->
             <div class="col-lg-6 col-xlg-6 col-md-12">
+
+
                 <div class="card">
                     <div class="card-body">
                         @if(session()->has('status'))
@@ -74,7 +78,14 @@
     </div>
 @endsection
 @section('css')
-    <!-- Select2 -->
+    <style>
+
+        @media only screen and (min-width: 767px) {
+            .show-mobile {
+                display: none;
+            }
+        }
+    </style>    <!-- Select2 -->
     <link rel="stylesheet" href="/select2/dist/css/select2.min.css">
 
 @endsection

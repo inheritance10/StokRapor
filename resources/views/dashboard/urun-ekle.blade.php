@@ -3,7 +3,7 @@
     <div class="page-breadcrumb bg-white">
         <div class="row align-items-center">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Ürün Ekle</h4>
+                <h4 class="page-title">Reçete Ekle</h4>
             </div>
         </div>
         <!-- /.col-lg-12 -->
@@ -14,6 +14,9 @@
         <!-- ============================================================== -->
         <!-- Row -->
         <div class="row">
+            <div class='geri-don'>
+                <a class="btn btn-warning show-mobile" href="{{url()->previous()}}">Geri</a>
+            </div>
             <!-- Column -->
             <div class="col-lg-6 col-xlg-6 col-md-12">
                 <div class="card">
@@ -85,7 +88,14 @@
     </div>
 @endsection
 @section('css')
-    <!-- Select2 -->
+    <style>
+
+        @media only screen and (min-width: 767px) {
+            .show-mobile {
+                display: none;
+            }
+        }
+    </style>    <!-- Select2 -->
     <link rel="stylesheet" href="/select2/dist/css/select2.min.css">
 
 @endsection

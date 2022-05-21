@@ -5,6 +5,9 @@
         <!-- Start Page Content -->
         <!-- ============================================================== -->
         <div class="row">
+            <div class='geri-don'>
+                <a class="btn btn-warning show-mobile" href="{{url()->previous()}}">Geri</a>
+            </div>
             <div class="col-sm-6">
                 <div class="white-box">
                     <h3 class="box-title">Bu Ayın Satışları</h3>
@@ -32,7 +35,7 @@
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$satis['urun_adi']}}</td>
                                 <td>{{$satis['toplam_satis']}}</td>
-                                <td>{{$satis['created_at']}}</td>
+                                <td>{{$satis['created_at']->format('Y-m-d')}}</td>
 {{--                                <td>{{$satis['adet_fiyati']}}</td>
                                 <td>{{$satis['toplam_gider']}} ₺</td>--}}
                             </tr>
@@ -49,6 +52,14 @@
     </div>
 @endsection
 @section('css')
+    <style>
+
+        @media only screen and (min-width: 767px) {
+            .show-mobile {
+                display: none;
+            }
+        }
+    </style>
 @endsection
 
 @section('js')

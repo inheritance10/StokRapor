@@ -5,6 +5,10 @@
         <!-- Start Page Content -->
         <!-- ============================================================== -->
         <div class="row">
+            <div class='geri-don'>
+                <a class="btn btn-warning show-mobile" href="{{url()->previous()}}">Geri</a>
+            </div>
+
             <div class="col-sm-12">
                 <div class="white-box">
                     <h3 class="box-title">Alımlar</h3>
@@ -31,7 +35,7 @@
                                     <td>{{$alim->alinan_miktar . " " . $alim->miktar_tipi}}</td>
                                     <td>{{$alim->toplam_fiyat}}₺</td>
                                     <td>{{number_format($alim->miktar_tipi == 'adet' ? $alim->toplam_fiyat / $alim->alinan_miktar  : ($alim->toplam_fiyat / $alim->alinan_miktar) * 1000, 2) }}₺</td>
-                                    <td>{{$alim->created_at}}</td>
+                                    <td>{{$alim->created_at->format('Y-m-d')}}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -46,7 +50,14 @@
     </div>
 @endsection
 @section('css')
-@endsection
+    <style>
+
+        @media only screen and (min-width: 767px) {
+            .show-mobile {
+                display: none;
+            }
+        }
+    </style>@endsection
 
 @section('js')
     <!-- jQuery 3 -->

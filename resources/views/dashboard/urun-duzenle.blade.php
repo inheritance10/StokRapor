@@ -3,12 +3,11 @@
     <div class="page-breadcrumb bg-white">
         <div class="row align-items-center">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Alım Ekle</h4>
+                <h4 class="page-title">Reçete Düzenle</h4>
             </div>
         </div>
         <!-- /.col-lg-12 -->
     </div>
-
     <div class="container-fluid">
         <!-- ============================================================== -->
         <!-- Start Page Content -->
@@ -30,39 +29,48 @@
                             </div>
                         @endif
 
-                        <form method="post" action="/alim-kaydet" class="form-horizontal form-material">
+                        <form method="post" action="/urun-duzenle-kaydet?id={{$urun->id}}" class="form-horizontal form-material">
                             @csrf
+                            <div class="form-group mb-4">
+                                <label class="col-md-12 p-0">Ürün İsmi</label>
+                                <div class="col-md-10 border-bottom p-0">
+                                    <input type="text" name="urun_adi" placeholder="Pastırmalı Pizza"
+                                           value="{{$urun->urun_adi}}"
+                                           class="form-control p-0 border-0"></div>
+                            </div>
                             <label class="col-sm-10">Malzeme Adı</label>
-                            <div id="malzemeler">
+                            @foreach($recete_malzemeler as $recete_malzeme)
+                                <div @if($loop->last) id="malzemeler" @endif>
 
-                                <div id="malzeme" class="form-group mb-4">
-                                    <div class="row">
-
-
-                                        <div class="col-sm-8 border-bottom">
-                                            <select name="malzeme[]"
-                                                    class="form-select shadow-none p-0 border-0 form-control-line select2">
-                                                @foreach($malzemeler as $malzeme)
-                                                    <option value="{{$malzeme->id}}">{{$malzeme->malzeme_adi}}({{$malzeme->miktar_tipi}})</option>
-                                                @endforeach
-                                            </select>
+                                    <div id="malzeme" class="form-group mb-4">
+                                        <div class="row">
+                                            <div class="col-sm-10 border-bottom">
+                                                <select name="malzeme[]"
+                                                        class="form-select shadow-none p-0 border-0 form-control-line select2">
+                                                    <option disabled>Malzeme seç</option>
+                                                    @foreach($malzemeler as $malzeme)
+                                                        <option @if($malzeme->id == $recete_malzeme->malzemeler_id) selected @endif value="{{$malzeme->id}}">{{$malzeme->malzeme_adi}}
+                                                            ({{$malzeme->miktar_tipi}})
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 border-bottom p-0">
+                                                <input type="number" name="malzeme_miktar[]" step="any"
+                                                       placeholder="Miktar (gr, adet, ml)"
+                                                       value="{{$recete_malzeme->recete_malzeme_miktar}}"
+                                                       class="form-control p-0 border-0"></div>
                                         </div>
-                                        <div class="col-md-2 border-bottom p-0">
-                                            <input type="number" name="malzeme_miktar[]" step="any" placeholder="Miktar (gr, adet, ml)"
-                                                   class="form-control p-0 border-0"></div>
-                                        <div class="col-md-2 border-bottom p-0">
-                                            <input type="number" name="toplam_fiyat[]" step="any" placeholder="Toplam Tutar(₺)"
-                                                   class="form-control p-0 border-0"></div>
-                                    </div>
-                                    <div class="col-sm-2 border-bottom">
+                                        <div class="col-sm-2 border-bottom">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
                             <a class="btn btn-info mb-4" id="btn2">Malzeme Ekle</a>
 
                             <div class="form-group mb-4">
                                 <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-success">Alımı Kaydet</button>
+                                    <button type="submit" class="btn btn-success">Reçeteyi Kaydet</button>
                                 </div>
                             </div>
                         </form>
@@ -74,13 +82,6 @@
         <!-- Row -->
         <!-- ============================================================== -->
         <!-- End PAge Content -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Right sidebar -->
-        <!-- ============================================================== -->
-        <!-- .right-sidebar -->
-        <!-- ============================================================== -->
-        <!-- End Right sidebar -->
         <!-- ============================================================== -->
     </div>
 @endsection
@@ -103,6 +104,7 @@
     <script src="/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
 
     <!-- Select2 -->
+    <script src="/select2/dist/js/select2.full.min.js"></script>
     <script src="/select2/dist/js/select2.full.min.js"></script>
     <script>
         var sayac = 0;

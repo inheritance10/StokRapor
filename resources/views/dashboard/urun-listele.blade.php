@@ -5,6 +5,10 @@
         <!-- Start Page Content -->
         <!-- ============================================================== -->
         <div class="row">
+            <div class='geri-don'>
+                <a class="btn btn-warning show-mobile" href="{{url()->previous()}}">Geri</a>
+            </div>
+
             <div class="col-sm-12">
                 @if(session()->has('status'))
                     <div class="alert alert-info">
@@ -43,15 +47,27 @@
                                 <td>{{$urun->urun_adi}}</td>
                                 <td>{{$urun->adet}}</td>
                                 <td>{{number_format($urun->toplam, 2)}}₺</td>
-                                <td><a id="btn3" data="{{$urun->id}}"
-                                       class="btn btn-info text-white detay" target="_blank">
-                                        Ürün Detay</a>
-                                    <form id="urun-sil-form" action="recete-sil/{{$urun->id}}" method="post">
-                                        @csrf
-                                    <button type="button" onclick="myFunction()" title="Reçeteyi Sil"
-                                       class="btn btn-danger text-white">
-                                        Reçeteyi Sil</button>
-                                    </form>
+                                <td>
+                                    <div class="row">
+                                    <div class="col-auto">
+                                        <a id="btn3" data="{{$urun->id}}"
+                                           class="btn btn-info text-white detay" target="_blank">
+                                            <i class="fa fa-info" aria-hidden="true"></i></a>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a href="urun-duzenle?id={{$urun->id}}"
+                                           class="btn btn-warning text-white">
+                                            <i class="fa fa-edit" aria-hidden="true"></i></a>
+                                    </div>
+                                    <div class="col-auto">
+                                        <form id="urun-sil-form" action="recete-sil/{{$urun->id}}" method="post">
+                                            @csrf
+                                            <button type="button" onclick="myFunction()" title="Reçeteyi Sil"
+                                                    class="btn btn-danger text-white">
+                                                <i class="fa fa-remove" aria-hidden="true"></i></button>
+                                        </form>
+                                    </div>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
@@ -67,7 +83,14 @@
     </div>
 @endsection
 @section('css')
-@endsection
+    <style>
+
+        @media only screen and (min-width: 767px) {
+            .show-mobile {
+                display: none;
+            }
+        }
+    </style>@endsection
 
 @section('js')
     <!-- jQuery 3 -->

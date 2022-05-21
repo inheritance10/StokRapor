@@ -21,12 +21,16 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('recete-listele', [UrunlerController::class, 'urunListele'])->name('urun-listele');
     Route::get('urun-ekle', [UrunlerController::class, 'urunEkle'])->name('urun-ekle');
+    Route::get('urun-duzenle', [UrunlerController::class, 'urunDuzenle'])->name('urun-duzenle');
+    Route::post('urun-duzenle-kaydet', [UrunlerController::class, 'urunDuzenleKaydet'])->name('urun-duzenle-kaydet');
     Route::post('urun-kaydet', [UrunlerController::class, 'urunKaydet'])->name('urun-kaydet');
     Route::post('recete-sil/{id}', [UrunlerController::class, 'receteSil'])->name('recete-sil');
 
     Route::get('malzeme-ekle', [UrunlerController::class, 'malzemeEkle'])->name('malzeme-ekle');
     Route::get('malzemeleri-getir/{id}', [UrunlerController::class, 'malzemeleriGetir'])->name('malzemeleri-getir');
     Route::post('malzeme-kaydet', [UrunlerController::class, 'malzemeKaydet'])->name('malzeme-kaydet');
+    Route::get('malzeme-duzenle', [UrunlerController::class, 'malzemeDuzenle'])->name('malzeme-duzenle');
+    Route::post('malzeme-duzenle-kaydet', [UrunlerController::class, 'malzemeDuzenleKaydet'])->name('malzeme-duzenle-kaydet');
     Route::get('malzeme-detay', [UrunlerController::class, 'malzemeDetay'])->name('malzeme-detay');
     Route::post('urun-sil/{malzeme}', [UrunlerController::class, 'malzemeSil'])->name('malzeme-sil');
 

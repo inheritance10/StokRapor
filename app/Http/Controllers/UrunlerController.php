@@ -35,7 +35,6 @@ class UrunlerController extends Controller
 
     public function malzemeEkle()
     {
-
         return view('dashboard.malzeme-ekle');
     }
 
@@ -59,10 +58,26 @@ class UrunlerController extends Controller
             if (empty($malzemeler[$i]) || empty($miktar_tipleri[$i]))
                 return back()->with('status', 'Yeterli Ürün Yok.');
             malzemeler::create([
-                'malzeme_adi' => $malzemeler[$i],
+                'malzeme_adi' => tr_strtoupper($malzemeler[$i]),
                 'miktar_tipi' => $miktar_tipleri[$i]
             ]);
         }
+        return redirect()->route('urun-listele');
+    }
+
+    public function malzemeDuzenle(Request $request)
+    {
+        $malzeme = malzemeler::withTrashed()->find($request->id);
+        return view('dashboard.malzeme-duzenle', compact('malzeme'));
+    }
+
+    public function malzemeDuzenleKaydet(Request $request)
+    {
+        $malzeme = malzemeler::withTrashed()->find($request->id);
+        $malzeme->update([
+            'malzeme_adi' => tr_strtoupper($request->malzeme_adi),
+            'miktar_tipi' => $request->miktar_tipi
+        ]);
         return redirect()->route('urun-listele');
     }
 
@@ -104,13 +119,13 @@ class UrunlerController extends Controller
     {
 
         $urun = urunler::create([
-            'urun_adi' => $request->urun_adi
+            'urun_adi' => tr_strtoupper($request->urun_adi)
         ]);
         $malzemeler = $request->malzeme;
         $miktarlar = $request->malzeme_miktar;
 
         for ($i = 0; $i < count($malzemeler); $i++) {
-            if (empty($malzemeler[$i]) || empty($miktarlar[$i]))
+            if (empty($malzemeler[$i]) || empty($miktarlar[$i])  || $miktarlar[$i] <= 0)
                 return back()->with('status', 'Lütfen Geçerli Değerler Giriniz.');
             recete_malzemeler::create([
                 'recete_id' => $urun->id,
@@ -118,6 +133,41 @@ class UrunlerController extends Controller
                 'recete_malzeme_miktar' => $miktarlar[$i]
             ]);
         }
+        return redirect()->route('urun-listele');
+    }
+
+    public function urunDuzenle(Request $request)
+    {
+        $urun = urunler::where('urunler.id',$request->id)->first();
+        $recete_malzemeler = recete_malzemeler::where('recete_id', $request->id)->get();
+        $malzemeler = malzemeler::withTrashed()->get();
+        return view('dashboard.urun-duzenle', compact('malzemeler', 'urun', 'recete_malzemeler'));
+    }
+
+    public function urunDuzenleKaydet(Request $request)
+    {
+
+        $urun = urunler::find($request->id);
+        $urun->update([
+            'urun_adi' => tr_strtoupper($request->urun_adi)
+        ]);
+        DB::beginTransaction();
+        recete_malzemeler::where('recete_id', $request->id)->delete();
+        $malzemeler = $request->malzeme;
+        $miktarlar = $request->malzeme_miktar;
+
+        for ($i = 0; $i < count($malzemeler); $i++) {
+            if (empty($malzemeler[$i]) || empty($miktarlar[$i]) || $miktarlar[$i] <= 0) {
+                DB::rollBack();
+                return back()->with('status', 'Lütfen Geçerli Değerler Giriniz.');
+            }
+            recete_malzemeler::create([
+                'recete_id' => $urun->id,
+                'malzemeler_id' => $malzemeler[$i],
+                'recete_malzeme_miktar' => $miktarlar[$i]
+            ]);
+        }
+        DB::commit();
         return redirect()->route('urun-listele');
     }
 
@@ -161,8 +211,10 @@ class UrunlerController extends Controller
         $miktarlar = $request->urun_adet;
 
         for ($i = 0; $i < count($urunler); $i++) {
-            if (empty($urunler[$i]) || empty($miktarlar[$i]))
+            if (empty($urunler[$i]) || empty($miktarlar[$i]) || $miktarlar[$i] <= 0) {
+                DB::rollBack();
                 return back()->with('status', 'Lütfen Geçerli Değerler Giriniz.');
+            }
 
             $malzemeler = recete_malzemeler::where('recete_id', $urunler[$i])->get();
             for ($j = 0; $j < count($malzemeler); $j++) {

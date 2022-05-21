@@ -5,6 +5,10 @@
         <!-- Start Page Content -->
         <!-- ============================================================== -->
         <div class="row">
+            <div class='geri-don'>
+                <a class="btn btn-warning show-mobile" href="{{url()->previous()}}">Geri</a>
+            </div>
+
             <div class="col-sm-6">
                 @if(session()->has('status'))
                     <div class="alert alert-info">
@@ -34,13 +38,9 @@
                                     <td>{{$malzeme->miktar ?? "Alım Yapılmadı"}}</td>
                                     <td>{{$malzeme->miktar_tipi}}</td>
                                     <td>
-                                        <form id="urun-sil-form" action="urun-sil/{{$malzeme->id}}" method="post">
-                                            @csrf
-                                            <button type="button" onclick="myFunction()" title="Ürünü Sil"
-                                                    class="urun-sil btn btn-danger text-white">
-                                                Ürünü Sil
-                                            </button>
-                                        </form>
+                                        <a href="malzeme-duzenle?id={{$malzeme->id}}"
+                                           class="btn btn-warning text-white">
+                                            <i class="fa fa-edit" aria-hidden="true"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -85,7 +85,14 @@
     </div>
 @endsection
 @section('css')
-@endsection
+    <style>
+
+        @media only screen and (min-width: 767px) {
+            .show-mobile {
+                display: none;
+            }
+        }
+    </style>@endsection
 
 @section('js')
     <!-- jQuery 3 -->

@@ -3,7 +3,7 @@
     <div class="page-breadcrumb bg-white">
         <div class="row align-items-center">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title">Ürün Ekle</h4>
+                <h4 class="page-title">Ürün Düzenle</h4>
             </div>
         </div>
         <!-- /.col-lg-12 -->
@@ -30,7 +30,7 @@
                             </div>
                         @endif
 
-                        <form method="post" action="{{route('malzeme-kaydet')}}" class="form-horizontal form-material">
+                        <form method="post" action="{{route('malzeme-duzenle-kaydet')}}?id={{$malzeme->id}}" class="form-horizontal form-material">
                             @csrf
                             {{--                            <div class="form-group mb-4">
                                                             <label class="col-md-12 p-0">Ürün İsmi</label>
@@ -47,28 +47,28 @@
 
 
                                         <div class="col-sm-10 border-bottom">
-                                            <input type="text" name="malzeme[]" placeholder="Ürün"
+                                            <input type="text" name="malzeme_adi" placeholder="Ürün"
+                                                   value="{{$malzeme->malzeme_adi}}"
                                                    class="form-control p-0 border-0">
                                         </div>
                                         <div class="col-md-2 border-bottom p-0">
-                                            <select name="miktar_tipi[]"
+                                            <select name="miktar_tipi"
                                                     class="form-select shadow-none p-0 border-0 form-control-line select2">
-                                                <option>adet</option>
-                                                <option>gram</option>
-                                                <option>ml</option>
+                                                <option @if($malzeme->miktar_tipi == "adet") selected @endif>adet</option>
+                                                <option @if($malzeme->miktar_tipi == "gram") selected @endif>gram</option>
+                                                <option @if($malzeme->miktar_tipi == "ml") selected @endif>ml</option>
                                             </select>
 
-                                    </div>
-                                    <div class="col-sm-2 border-bottom">
+                                        </div>
+                                        <div class="col-sm-2 border-bottom">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            </div>
-                            <a class="btn btn-info mb-4" id="btn2">Ürün Ekle</a>
 
                             <div class="form-group mb-4">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-success">Ürünleri Kaydet</button>
+                                    <button class="btn btn-success">Ürünü Kaydet</button>
                                 </div>
                             </div>
                         </form>
