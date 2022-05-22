@@ -65,7 +65,7 @@
 
                             <div class="form-group mb-4">
                                 <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-success">Ürünü Ekle</button>
+                                    <button type="submit" class="btn btn-success">Reçeteyi Ekle</button>
                                 </div>
                             </div>
                         </form>

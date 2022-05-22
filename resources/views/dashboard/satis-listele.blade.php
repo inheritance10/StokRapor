@@ -10,6 +10,14 @@
             </div>
             <div class="col-sm-6">
                 <div class="white-box">
+                    <div class="card-body">
+                        @if(session()->has('status'))
+                            <div class="alert alert-warning">
+                                <h4>
+                                    {{session('status')}}
+                                </h4>
+                            </div>
+                        @endif
                     <h3 class="box-title">Bu Ayın Satışları</h3>
                     <a href="{{route('satis-ekle')}}"
                        class="btn btn-info text-white" >
