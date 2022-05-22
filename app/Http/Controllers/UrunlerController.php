@@ -251,15 +251,16 @@ class UrunlerController extends Controller
                     return back()->with('status', 'Yeterli Ürün Yok.');
                 }
                 $alinanKalan = $alinanToplam - ($malzemeler[$j]->recete_malzeme_miktar * $miktarlar[$i]);
+                $harcanacak = $malzemeler[$j]->recete_malzeme_miktar;
 
                 //Alinanlar da yeterli stok varmı kontrolü yapılıyor
                 if ($alinanKalan >= 0) {
                     foreach ($alinan as $al) {
-                        if ($alinanToplam >= $al->stok_miktar) {
+                        if ($harcanacak >= $al->stok_miktar) {
                             $al->stok_miktar = 0;
-                            $alinanToplam = $alinanToplam - $al->stok_miktar;
+                            $harcanacak = $harcanacak - $al->stok_miktar;
                         }else{
-                            $al->stok_miktar = $al->stok_miktar - $alinanToplam;
+                            $al->stok_miktar = $al->stok_miktar - $harcanacak;
                         }
                         $al->save();
                         $malzeme = malzemeler::find($malzemeler[$j]->malzemeler_id)->malzeme_adi;
