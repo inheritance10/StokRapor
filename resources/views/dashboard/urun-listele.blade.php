@@ -60,9 +60,9 @@
                                             <i class="fa fa-edit" aria-hidden="true"></i></a>
                                     </div>
                                     <div class="col-auto">
-                                        <form id="urun-sil-form" action="recete-sil/{{$urun->id}}" method="post">
+                                        <form id="urun-sil-form{{$urun->id}}" action="recete-sil/{{$urun->id}}" method="post">
                                             @csrf
-                                            <button type="button" onclick="myFunction()" title="Reçeteyi Sil"
+                                            <button type="button" onclick="myFunction({{$urun->id}})" title="Reçeteyi Sil"
                                                     class="btn btn-danger text-white">
                                                 <i class="fa fa-remove" aria-hidden="true"></i></button>
                                         </form>
@@ -109,10 +109,10 @@
             console.log($(this).attr('data'))
 
             });
-        function myFunction() {
+        function myFunction(id) {
             let text = "Silmek Sitediğinizden emin misiniz.";
             if (confirm(text) == true) {
-                document.getElementById("urun-sil-form").submit();
+                document.getElementById("urun-sil-form" + id).submit();
             } else {
 
             }

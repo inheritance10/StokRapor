@@ -54,7 +54,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-2 border-bottom p-0">
-                                            <input type="number" step="any" name="urun_adet" placeholder="Miktar (adet)"
+                                            <input type="number" step="any" name="urun_adet[]" placeholder="Miktar (adet)"
                                                    class="form-control p-0 border-0"></div>
                                     </div>
                                     <div class="col-sm-2 border-bottom">

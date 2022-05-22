@@ -8,7 +8,7 @@
             <div class='geri-don'>
                 <a class="btn btn-warning show-mobile" href="{{url()->previous()}}">Geri</a>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <div class="white-box">
                     <div class="card-body">
                         @if(session()->has('status'))

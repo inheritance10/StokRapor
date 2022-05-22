@@ -28,7 +28,7 @@ class UrunlerController extends Controller
 
     public function stokListele()
     {
-        $malzemeler = DB::select('select id, malzeme_adi, miktar_tipi, (select sum(stok_miktar)  from alinanlar where alinanlar.malzeme_id = m.id ) as miktar from malzemeler m where m.deleted_at is null');
+        $malzemeler = DB::select('select id, malzeme_adi, miktar_tipi, (select sum(stok_miktar)  from alinanlar where alinanlar.malzeme_id = m.id ) as miktar from malzemeler m where m.deleted_at is null order by malzeme_adi');
         $malzemeGiderler = DB::select('select malzeme_adi, miktar_tipi, (select sum(toplam_fiyat) from alinanlar where alinanlar.malzeme_id = m.id and month(now()) = month(created_at) and year(now()) = year(created_at)) as fiyat from malzemeler m');
         return view('dashboard.stok-listele', compact('malzemeler', 'malzemeGiderler'));
     }
@@ -63,8 +63,8 @@ class UrunlerController extends Controller
                     'malzeme_adi' => tr_strtoupper($malzemeler[$i]),
                     'miktar_tipi' => $miktar_tipleri[$i]
                 ]);
-            }catch (\Exception $exception){
-                return back()->with('status', 'Girdiğiniz'. $malzemeler[$i] .' ürünü sistemde mevcut.');
+            } catch (\Exception $exception) {
+                return back()->with('status', 'Girdiğiniz' . $malzemeler[$i] . ' ürünü sistemde mevcut.');
             }
 
         }
@@ -81,11 +81,11 @@ class UrunlerController extends Controller
     {
         $malzeme = malzemeler::withTrashed()->find($request->id);
         try {
-        $malzeme->update([
-            'malzeme_adi' => tr_strtoupper($request->malzeme_adi),
-            'miktar_tipi' => $request->miktar_tipi
-        ]);
-        }catch (\Exception $exception){
+            $malzeme->update([
+                'malzeme_adi' => tr_strtoupper($request->malzeme_adi),
+                'miktar_tipi' => $request->miktar_tipi
+            ]);
+        } catch (\Exception $exception) {
             return back()->with('status', 'Girdiğiniz ürün sistemde mevcut.');
         }
         return redirect()->route('urun-listele');
@@ -129,23 +129,23 @@ class UrunlerController extends Controller
     {
         try {
 
-        $urun = urunler::create([
-            'urun_adi' => tr_strtoupper($request->urun_adi)
-        ]);
-        }catch (\Exception $e){
+            $urun = urunler::create([
+                'urun_adi' => tr_strtoupper($request->urun_adi)
+            ]);
+        } catch (\Exception $e) {
             return back()->with('status', 'Girdiğiniz reçete sistemde mevcut.');
         }
         $malzemeler = $request->malzeme;
         $miktarlar = $request->malzeme_miktar;
 
         for ($i = 0; $i < count($malzemeler); $i++) {
-            if (empty($malzemeler[$i]) || empty($miktarlar[$i])  || $miktarlar[$i] <= 0)
+            if (empty($malzemeler[$i]) || empty($miktarlar[$i]) || $miktarlar[$i] <= 0)
                 return back()->with('status', 'Lütfen Geçerli Değerler Giriniz.');
-                recete_malzemeler::create([
-                    'recete_id' => $urun->id,
-                    'malzemeler_id' => $malzemeler[$i],
-                    'recete_malzeme_miktar' => $miktarlar[$i]
-                ]);
+            recete_malzemeler::create([
+                'recete_id' => $urun->id,
+                'malzemeler_id' => $malzemeler[$i],
+                'recete_malzeme_miktar' => $miktarlar[$i]
+            ]);
 
 
         }
@@ -154,7 +154,7 @@ class UrunlerController extends Controller
 
     public function urunDuzenle(Request $request)
     {
-        $urun = urunler::where('urunler.id',$request->id)->first();
+        $urun = urunler::where('urunler.id', $request->id)->first();
         $recete_malzemeler = recete_malzemeler::where('recete_id', $request->id)->get();
         $malzemeler = malzemeler::withTrashed()->get();
         return view('dashboard.urun-duzenle', compact('malzemeler', 'urun', 'recete_malzemeler'));
@@ -165,10 +165,10 @@ class UrunlerController extends Controller
 
         $urun = urunler::find($request->id);
         try {
-        $urun->update([
-            'urun_adi' => tr_strtoupper($request->urun_adi)
-        ]);
-        }catch (\Exception $e){
+            $urun->update([
+                'urun_adi' => tr_strtoupper($request->urun_adi)
+            ]);
+        } catch (\Exception $e) {
             return back()->with('status', 'Girdiğiniz reçete sistemde mevcut.');
         }
         DB::beginTransaction();
@@ -191,7 +191,8 @@ class UrunlerController extends Controller
         return redirect()->route('urun-listele');
     }
 
-    public function malzemeSil(malzemeler $malzeme){
+    public function malzemeSil(malzemeler $malzeme)
+    {
         $malzeme->delete();
         return redirect()->route('stok-listele')->with('status', 'Ürün başarıyla silindi.');
     }
@@ -235,43 +236,44 @@ class UrunlerController extends Controller
                 DB::rollBack();
                 return back()->with('status', 'Lütfen Geçerli Değerler Giriniz.');
             }
-
             $malzemeler = recete_malzemeler::where('recete_id', $urunler[$i])->get();
-            for ($j = 0; $j < count($malzemeler); $j++) {
-                $alinan = alinanlar::where('malzeme_id', $malzemeler[$j]->malzemeler_id)
-                    ->where('stok_miktar', '>', 0)
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-                $alinanToplam = alinanlar::where('malzeme_id', $malzemeler[$j]->malzemeler_id)
-                    ->where('stok_miktar', '>', 0)
-                    ->orderBy('created_at', 'desc')
-                    ->sum('stok_miktar');
-                if (count($alinan) <= 0) {
-                    DB::rollBack();
-                    return back()->with('status', 'Yeterli Ürün Yok.');
-                }
-                $alinanKalan = $alinanToplam - ($malzemeler[$j]->recete_malzeme_miktar * $miktarlar[$i]);
-                $harcanacak = $malzemeler[$j]->recete_malzeme_miktar;
-
-                //Alinanlar da yeterli stok varmı kontrolü yapılıyor
-                if ($alinanKalan >= 0) {
-                    foreach ($alinan as $al) {
-                        if ($harcanacak >= $al->stok_miktar) {
-                            $al->stok_miktar = 0;
-                            $harcanacak = $harcanacak - $al->stok_miktar;
-                        }else{
-                            $al->stok_miktar = $al->stok_miktar - $harcanacak;
-                        }
-                        $al->save();
-                        $malzeme = malzemeler::find($malzemeler[$j]->malzemeler_id)->malzeme_adi;
-                        if ($alinanKalan == 0 && !str_contains($tukenenUrunler, $malzeme)){
-                            $tukenenUrunler .= $tukenenUrunler == "" ? "" : " ,";
-                            $tukenenUrunler .= $malzeme;
-                        }
+            for ($k = 0; $k < $miktarlar[$i]; $k++) {
+                for ($j = 0; $j < count($malzemeler); $j++) {
+                    $alinan = alinanlar::where('malzeme_id', $malzemeler[$j]->malzemeler_id)
+                        ->where('stok_miktar', '>', 0)
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+                    $alinanToplam = alinanlar::where('malzeme_id', $malzemeler[$j]->malzemeler_id)
+                        ->where('stok_miktar', '>', 0)
+                        ->orderBy('created_at', 'desc')
+                        ->sum('stok_miktar');
+                    if (count($alinan) <= 0) {
+                        DB::rollBack();
+                        return back()->with('status', 'Yeterli Ürün Yok.');
                     }
-                } else {
-                    DB::rollBack();
-                    return back()->with('status', 'Yeterli Stok Yok.');
+                    $alinanKalan = $alinanToplam - ($malzemeler[$j]->recete_malzeme_miktar * $miktarlar[$i]);
+                    $harcanacak = $malzemeler[$j]->recete_malzeme_miktar;
+
+                    //Alinanlar da yeterli stok varmı kontrolü yapılıyor
+                    if ($alinanKalan >= 0) {
+                        foreach ($alinan as $al) {
+                            if ($harcanacak >= $al->stok_miktar) {
+                                $al->stok_miktar = 0;
+                                $harcanacak = $harcanacak - $al->stok_miktar;
+                            } else {
+                                $al->stok_miktar = $al->stok_miktar - $harcanacak;
+                            }
+                            $al->save();
+                            $malzeme = malzemeler::find($malzemeler[$j]->malzemeler_id)->malzeme_adi;
+                            if ($alinanKalan == 0 && !str_contains($tukenenUrunler, $malzeme)) {
+                                $tukenenUrunler .= $tukenenUrunler == "" ? "" : " ,";
+                                $tukenenUrunler .= $malzeme;
+                            }
+                        }
+                    } else {
+                        DB::rollBack();
+                        return back()->with('status', 'Yeterli Stok Yok.');
+                    }
                 }
             }
             $tukenenUrunler .= $tukenenUrunler != "" ? " ürünleri tükendi." : "";
@@ -378,22 +380,23 @@ class UrunlerController extends Controller
         return redirect()->route('alim-listele');
     }
 
-    public function sonSilineniGeriAl(){
+    public function sonSilineniGeriAl()
+    {
         $sonUrun = urunler::withTrashed()->orderByDesc('deleted_at')->first();
         $sonMalzeme = malzemeler::withTrashed()->orderByDesc('deleted_at')->first();
 
         if (($sonUrun == null && $sonMalzeme == null) || ($sonMalzeme?->deleted_at == null && $sonUrun?->deleted_at == null))
-            return redirect()->route('urun-listele')->with('status', 'Geri alınacak bir şey yok.' );
+            return redirect()->route('urun-listele')->with('status', 'Geri alınacak bir şey yok.');
 
-        if ($sonMalzeme?->deleted_at > $sonUrun?->deleted_at){
+        if ($sonMalzeme?->deleted_at > $sonUrun?->deleted_at) {
             $sonMalzeme->restore();
             $mesaj = $sonMalzeme->malzeme_adi . ' ürünü';
-        }else{
+        } else {
             $sonUrun->restore();
             $mesaj = $sonUrun->urun_adi . ' reçetesi';
         }
 
-        return redirect()->route('urun-listele')->with('status', 'Silinen ' . $mesaj . ' başarıyla geri alındı' );
+        return redirect()->route('urun-listele')->with('status', 'Silinen ' . $mesaj . ' başarıyla geri alındı');
     }
 
 }

@@ -32,7 +32,7 @@
                             </thead>
                             <tbody>
                             @foreach($malzemeler as $malzeme)
-                                <tr>
+                                <tr @if($malzeme->miktar <= 0) class="bg-danger text-white" @endif>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$malzeme->malzeme_adi}}</td>
                                     <td>{{$malzeme->miktar ?? "Alım Yapılmadı"}}</td>
