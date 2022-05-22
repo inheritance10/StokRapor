@@ -33,36 +33,46 @@
                         @endif
                         <form method="post" action="{{route('satis-kaydet')}}" class="form-horizontal form-material">
                             @csrf
-{{--                            <div class="form-group mb-4">
-                                <label class="col-md-12 p-0">Ürün İsmi</label>
-                                <div class="col-md-10 border-bottom p-0">
-                                    <input type="text" placeholder="Pastırmalı Pizza"
-                                           class="form-control p-0 border-0">
-                                </div>
-                            </div>--}}
+                            {{--                            <div class="form-group mb-4">
+                                                            <label class="col-md-12 p-0">Ürün İsmi</label>
+                                                            <div class="col-md-10 border-bottom p-0">
+                                                                <input type="text" placeholder="Pastırmalı Pizza"
+                                                                       class="form-control p-0 border-0">
+                                                            </div>
+                                                        </div>--}}
                             <label class="col-sm-10">Reçete Adı</label>
                             <div id="malzemeler">
+                                <div class="malzeme">
+                                    <div class="malzeme-sil">
+                                        <div class="form-group mb-4">
+                                            <div class="row">
+                                                <div class="col-sm-9 border-bottom">
+                                                    <select name="urun[]"
+                                                            class="form-select shadow-none p-0 border-0 form-control-line select2">
+                                                        @foreach($urunler as $urun)
+                                                            <option value="{{$urun->id}}">{{$urun->urun_adi}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2 border-bottom p-0">
+                                                    <input type="number" step="any" name="urun_adet[]"
+                                                           placeholder="Miktar (adet)"
+                                                           class="form-control p-0 border-0"></div>
+                                                <div class="col-md-1 border-bottom p-0">
+                                                    <button type="button" style=" border-radius: 20px; float: right"
+                                                            onclick="" title="Reçete Çıkar"
+                                                            class="btn btn3 btn-danger text-white">
+                                                        <i class="fa fa-delete-left" aria-hidden="true"></i></button>
 
-                                <div id="malzeme" class="form-group mb-4">
-                                    <div class="row">
-                                        <div class="col-sm-10 border-bottom">
-                                            <select name="urun[]"
-                                                    class="form-select shadow-none p-0 border-0 form-control-line select2">
-                                                @foreach($urunler as $urun)
-                                                    <option value="{{$urun->id}}">{{$urun->urun_adi}}</option>
-                                                @endforeach
-                                            </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 border-bottom">
+                                            </div>
                                         </div>
-                                        <div class="col-md-2 border-bottom p-0">
-                                            <input type="number" step="any" name="urun_adet[]" placeholder="Miktar (adet)"
-                                                   class="form-control p-0 border-0"></div>
-                                    </div>
-                                    <div class="col-sm-2 border-bottom">
                                     </div>
                                 </div>
                             </div>
-                            <a class="btn btn-info mb-4" id="btn2">Reçete Ekle</a>
-
+                            <a class="btn btn-info mb-4" id="btn2"><i class="fa fa-add text-white"></i></a>
                             <div class="form-group mb-4">
                                 <div class="col-sm-12">
                                     <button class="btn btn-success">Satışı Kaydet</button>
@@ -100,8 +110,13 @@
     <script>
         var sayac = 0;
         $("#btn2").click(function () {
-            $("#malzemeler").append($("#malzeme").html());
+            $("#malzemeler").append($(".malzeme").html());
         });
+        $(document).on('click', ".btn3", function () {
+            $(this).closest('.malzeme-sil').remove()
+        });
+    </script>
+
     </script>
 
 @endsection

@@ -41,30 +41,40 @@
                                                         </div>--}}
                             <label class="col-sm-10">Ürün Adı</label>
                             <div id="malzemeler">
+                                <div class="malzeme">
+                                    <div class="malzeme-sil">
+                                        <div class="form-group mb-4">
+                                            <div class="row">
+                                                <div class="col-sm-9 border-bottom">
+                                                    <input type="text" name="malzeme[]" placeholder="Ürün"
+                                                           class="form-control p-0 border-0">
+                                                </div>
+                                                <div class="col-md-2 border-bottom p-0">
+                                                    <select name="miktar_tipi[]"
+                                                            class="form-select shadow-none p-0 border-0 form-control-line select2">
+                                                        <option>adet</option>
+                                                        <option>gram</option>
+                                                        <option>ml</option>
+                                                    </select>
 
-                                <div id="malzeme" class="form-group mb-4">
-                                    <div class="row">
+                                                </div>
+                                                <div class="col-md-1 border-bottom p-0">
+                                                    <button type="button" style=" border-radius: 20px; float: right"
+                                                            onclick="" title="Ürün Çıkar"
+                                                            class="btn btn3 btn-danger text-white">
+                                                        <i class="fa fa-delete-left" aria-hidden="true"></i></button>
 
+                                                </div>
 
-                                        <div class="col-sm-10 border-bottom">
-                                            <input type="text" name="malzeme[]" placeholder="Ürün"
-                                                   class="form-control p-0 border-0">
+                                                <div class="col-sm-2 border-bottom">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-2 border-bottom p-0">
-                                            <select name="miktar_tipi[]"
-                                                    class="form-select shadow-none p-0 border-0 form-control-line select2">
-                                                <option>adet</option>
-                                                <option>gram</option>
-                                                <option>ml</option>
-                                            </select>
-
-                                    </div>
-                                    <div class="col-sm-2 border-bottom">
                                     </div>
                                 </div>
                             </div>
-                            </div>
-                            <a class="btn btn-info mb-4" id="btn2">Ürün Ekle</a>
+                            <a class="btn btn-info mb-4" id="btn2"><i class="fa fa-add text-white"></i></a>
+
 
                             <div class="form-group mb-4">
                                 <div class="col-sm-12">
@@ -103,7 +113,10 @@
     <script>
         var sayac = 0;
         $("#btn2").click(function () {
-            $("#malzemeler").append($("#malzeme").html());
+            $("#malzemeler").append($(".malzeme").html());
+        });
+        $(document).on('click', ".btn3", function () {
+            $(this).closest('.malzeme-sil').remove()
         });
     </script>
 

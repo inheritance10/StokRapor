@@ -99,7 +99,8 @@ class UrunlerController extends Controller
 
     public function receteSil($id)
     {
-        $malzemeler = urunler::find($id)?->delete();
+        urunler::find($id)?->delete();
+        recete_malzemeler::where('recete_id', $id)->delete();
         return redirect()->route('urun-listele')->with('status', 'Reçete başarıyla silindi.');
     }
 
@@ -127,8 +128,10 @@ class UrunlerController extends Controller
 
     public function urunKaydet(Request $request)
     {
-        try {
+        if (empty($request->urun_adi))
+            return back()->with('status', 'Lütfen Geçerli Değerler Giriniz.');
 
+        try {
             $urun = urunler::create([
                 'urun_adi' => tr_strtoupper($request->urun_adi)
             ]);

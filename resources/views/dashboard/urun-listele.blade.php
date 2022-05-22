@@ -64,7 +64,7 @@
                                             @csrf
                                             <button type="button" onclick="myFunction({{$urun->id}})" title="Reçeteyi Sil"
                                                     class="btn btn-danger text-white">
-                                                <i class="fa fa-remove" aria-hidden="true"></i></button>
+                                                <i class="fa fa-trash" aria-hidden="true"></i></button>
                                         </form>
                                     </div>
                                     </div>
