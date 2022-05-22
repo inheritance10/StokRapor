@@ -261,8 +261,8 @@ class UrunlerController extends Controller
                     if ($alinanKalan >= 0) {
                         foreach ($alinan as $al) {
                             if ($harcanacak >= $al->stok_miktar) {
-                                $al->stok_miktar = 0;
                                 $harcanacak = $harcanacak - $al->stok_miktar;
+                                $al->stok_miktar = 0;
                             } else {
                                 $al->stok_miktar = $al->stok_miktar - $harcanacak;
                             }
