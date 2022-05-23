@@ -253,7 +253,7 @@ class UrunlerController extends Controller
                         DB::rollBack();
                         return back()->with('status', 'Yeterli Ürün Yok.');
                     }
-                    $alinanKalan = $alinanToplam - ($malzemeler[$j]->recete_malzeme_miktar * $miktarlar[$i]);
+                    $alinanKalan = $alinanToplam - ($malzemeler[$j]->recete_malzeme_miktar);
                     $harcanacak = $malzemeler[$j]->recete_malzeme_miktar;
 
                     //Alinanlar da yeterli stok varmı kontrolü yapılıyor
