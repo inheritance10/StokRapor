@@ -6,7 +6,7 @@
         <!-- ============================================================== -->
         <div class="row">
             <div class='geri-don'>
-                <a class="btn btn-warning show-mobile" href="{{url()->previous()}}">Geri</a>
+                <a class="btn btn-warning show-mobile" href="{{route('dashboard')}}">Anasayfaya Dön</a>
             </div>
 
             <div class="col-sm-12">

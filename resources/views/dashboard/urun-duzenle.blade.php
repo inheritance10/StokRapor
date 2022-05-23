@@ -29,10 +29,11 @@
                             </div>
                         @endif
 
-                        <form method="post" action="/urun-duzenle-kaydet?id={{$urun->id}}" class="form-horizontal form-material">
+                        <form method="post" action="/urun-duzenle-kaydet?id={{$urun->id}}"
+                              class="form-horizontal form-material">
                             @csrf
                             <div class="form-group mb-4">
-                                <label class="col-md-12 p-0">Ürün İsmi</label>
+                                <label class="col-md-12 p-0">Reçete İsmi</label>
                                 <div class="col-md-10 border-bottom p-0">
                                     <input type="text" name="urun_adi" placeholder="Pastırmalı Pizza"
                                            value="{{$urun->urun_adi}}"
@@ -41,27 +42,40 @@
                             <label class="col-sm-10">Malzeme Adı</label>
                             @foreach($recete_malzemeler as $recete_malzeme)
                                 <div @if($loop->last) id="malzemeler" @endif>
+                                    <div class="malzeme">
+                                        <div class="malzeme-sil">
+                                            <div class="form-group mb-4">
+                                                <div class="row">
+                                                    <div class="col-md-9 border-bottom">
+                                                        <select name="malzeme[]"
+                                                                class="form-select shadow-none p-0 border-0 form-control-line select2">
+                                                            <option disabled>Malzeme seç</option>
+                                                            @foreach($malzemeler as $malzeme)
+                                                                <option @if($malzeme->id == $recete_malzeme->malzemeler_id) selected
+                                                                        @endif value="{{$malzeme->id}}">{{$malzeme->malzeme_adi}}
+                                                                    ({{$malzeme->miktar_tipi}})
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2 border-bottom p-0">
+                                                        <input type="number" name="malzeme_miktar[]" step="any"
+                                                               placeholder="Miktar (gr, adet, ml)"
+                                                               value="{{$recete_malzeme->recete_malzeme_miktar}}"
+                                                               class="form-control p-0 border-0">
+                                                    </div>
+                                                    <div class="col-md-1 border-bottom p-0">
+                                                        <button type="button" style=" border-radius: 20px; float: right"
+                                                                onclick="" title="Malzeme Çıkar"
+                                                                class="btn btn3 btn-danger text-white">
+                                                            <i class="fa fa-delete-left" aria-hidden="true"></i>
+                                                        </button>
 
-                                    <div id="malzeme" class="form-group mb-4">
-                                        <div class="row">
-                                            <div class="col-sm-10 border-bottom">
-                                                <select name="malzeme[]"
-                                                        class="form-select shadow-none p-0 border-0 form-control-line select2">
-                                                    <option disabled>Malzeme seç</option>
-                                                    @foreach($malzemeler as $malzeme)
-                                                        <option @if($malzeme->id == $recete_malzeme->malzemeler_id) selected @endif value="{{$malzeme->id}}">{{$malzeme->malzeme_adi}}
-                                                            ({{$malzeme->miktar_tipi}})
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2 border-bottom">
+                                                </div>
                                             </div>
-                                            <div class="col-md-2 border-bottom p-0">
-                                                <input type="number" name="malzeme_miktar[]" step="any"
-                                                       placeholder="Miktar (gr, adet, ml)"
-                                                       value="{{$recete_malzeme->recete_malzeme_miktar}}"
-                                                       class="form-control p-0 border-0"></div>
-                                        </div>
-                                        <div class="col-sm-2 border-bottom">
                                         </div>
                                     </div>
                                 </div>
@@ -109,7 +123,10 @@
     <script>
         var sayac = 0;
         $("#btn2").click(function () {
-            $("#malzemeler").append($("#malzeme").html());
+            $("#malzemeler").append($(".malzeme").html());
+        });
+        $(document).on('click', ".btn3", function () {
+            $(this).closest('.malzeme-sil').remove()
         });
     </script>
 
