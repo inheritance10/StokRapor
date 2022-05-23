@@ -100,7 +100,6 @@ class UrunlerController extends Controller
     public function receteSil($id)
     {
         urunler::find($id)?->delete();
-        recete_malzemeler::where('recete_id', $id)->delete();
         return redirect()->route('urun-listele')->with('status', 'Reçete başarıyla silindi.');
     }
 

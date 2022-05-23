@@ -40,12 +40,12 @@
     <!-- ============================================================== -->
     <header class="topbar" data-navbarbg="skin5">
         <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-            <div class="navbar-header" data-logobg="skin6">
+            <div {{--class="navbar-header"--}} data-logobg="skin6">
                 <!-- ============================================================== -->
                 <!-- Logo -->
                 <!-- ============================================================== -->
-                <a class="navbar-brand" href="{{route('dashboard')}}">
-
+                <a class="navbar-brand" style="margin-left: 50px" href="{{route('dashboard')}}">
+                            {{\Illuminate\Support\Facades\Auth::user()->name}}
                 </a>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -58,7 +58,7 @@
             <!-- ============================================================== -->
             <!-- End Logo -->
             <!-- ============================================================== -->
-            <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+            <div style="position:absolute;top:15px;right:10px;color:#4c5667" {{-- class="navbar-collapse"--}} id="navbarSupportedContent" data-navbarbg="skin5">
 
                 <!-- ============================================================== -->
                 <!-- Right side toggle and nav items -->
@@ -72,9 +72,14 @@
                     <!-- ============================================================== -->
                     <!-- User profile and search -->
                     <!-- ============================================================== -->
+
                     <li>
-                        <a class="profile-pic" href="#">
-                            {{\Illuminate\Support\Facades\Auth::user()->name}}</span></a>
+                        <form method="post" action="logout">
+                            @csrf
+                            <a class="profile-pic" style="color:whitesmoke;cursor: pointer;" onclick="this.parentNode.submit();" >
+                                Çıkış Yap</a>
+                        </form>
+
                     </li>
                     <!-- ============================================================== -->
                     <!-- User profile and search -->

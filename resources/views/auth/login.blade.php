@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
-            <h1>ADMIN</h1>
+            <h1>ADMIN PANEL</h1>
         </x-slot>
 
         <!-- Session Status -->
@@ -15,7 +15,7 @@
 
             <!-- Email Address -->
             <div>
-                <x-label for="email" :value="__('Email')" />
+                <x-label for="email" :value="__('Eposta')" />
 
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
             </div>
@@ -45,7 +45,7 @@
                 @endif
 
                 <x-button class="ml-3">
-                    {{ __('Log in') }}
+                    {{ __('Giriş Yap') }}
                 </x-button>
             </div>
         </form>
