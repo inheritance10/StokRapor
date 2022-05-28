@@ -369,7 +369,7 @@ class UrunlerController extends Controller
         $fiyatlar = $request->toplam_fiyat;
 
         for ($i = 0; $i < count($malzemeler); $i++) {
-            if (empty($malzemeler[$i]) || empty($miktarlar[$i]))
+            if (empty($malzemeler[$i]) || empty($miktarlar[$i]) || empty($fiyatlar[$i]) || $fiyatlar[$i] < 0 || $miktarlar[$i] < 0)
                 return back()->with('status', 'Lütfen Geçerli Değerler Giriniz.');
             alinanlar::create([
                 'malzeme_id' => $malzemeler[$i],
